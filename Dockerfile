@@ -12,6 +12,20 @@ RUN apt-get update && apt-get install -y  \
     && apt-get autoclean -y \
     && rm -rf /var/lib/apt/lists/* 
 
+# xdebug config
+# RUN pecl install -o -f xdebug \
+#     && docker-php-ext-enable xdebug
+
+# RUN echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
+#     && echo "xdebug.remote_handler=dbgp" >>  /usr/local/etc/php/conf.d/xdebug.ini \
+#     && echo "xdebug.remote_port=9000" >> /usr/local/etc/php/conf.d/xdebug.ini \
+#     && echo "xdebug.remote_autostart=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
+#     && echo "xdebug.remote_connect_back=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
+#     && echo "xdebug.idekey=docker" >> /usr/local/etc/php/conf.d/xdebug.ini \
+#     && echo "xdebug.remote_log=/app/storage/logs/xdebug.log" >> /usr/local/etc/php/conf.d/xdebug.ini \
+#     && echo "xdebug.default_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini
+
+
 # Update apache conf to point to application public directory
 ENV APACHE_DOCUMENT_ROOT=/var/www/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf

@@ -12,6 +12,8 @@ services:
             - "database"
         ports:
             - 80:80
+        # extra_hosts:
+        #     - "host.docker.internal:host-gateway"
     # Database
     database:
         image: mysql:8.0
@@ -21,7 +23,7 @@ services:
             MYSQL_DATABASE: laravel
             MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
             MYSQL_PASSWORD: ${DB_PASSWORD}
-            MYSQL_USER: aaaa
+            MYSQL_USER: root
         ports:
             - "3306:3306"
     # Database management
@@ -32,7 +34,7 @@ services:
             - PMA_HOST=${DB_HOST}
             - PMA_USER=${DB_USERNAME}
             - PMA_PASSWORD=${DB_PASSWORD}
-            - PMA_PORT=${DB_PORT}
+            - PMA_PORT=3306
         depends_on:
             - database
         ports:
