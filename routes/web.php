@@ -14,12 +14,19 @@ Route::prefix('/modules')->group(function(){
     Route::put('/{id}', [ConfigController::class, 'courseUpdate'])->name('courseUpdate');
     Route::delete('/{id}', [ConfigController::class, 'courseDelete'])->name('courseDelete');
     
-    Route::prefix('/movies')->group(function(){
-        Route::get('', [MovieController::class, 'movies'])->name('movies');
+    Route::prefix('/{idModules}/movies')->group(function($id){
+        Route::get('/', [MovieController::class, 'movies'])->name('movies');
+        Route::get('/new', [MovieController::class, 'moviesForm'])->name('moviesForm');
+        Route::post('/new', [MovieController::class, 'moviesCreate'])->name('moviesCreate');
+        Route::get('/{id}', [MovieController::class, 'moviesEditForm'])->name('moviesEditForm');
+        Route::put('/{id}', [MovieController::class, 'moviesEdit'])->name('moviesEdit');
+        Route::get('/movieOpen/{id}', [MovieController::class, 'moviesOpen'])->name('moviesOpen');
+        Route::get('/movieOpenAdmin/{id}', [MovieController::class, 'moviesOpenAdmin'])->name('moviesOpenAdmin');
+        Route::delete('/{id}', [MovieController::class, 'moviesDelete'])->name('moviesDelete');
     });
 
-    Route::prefix('/subscrives')->group(function(){
-        Route::get('', [SubscribeController::class, 'subscribeByCourse'])->name('subscribeByCourse');
+    Route::prefix('/subscribers')->group(function(){
+        Route::get('/{id}', [SubscribeController::class, 'subscribeByCourse'])->name('subscribeByCourse');
     });
 });
 

@@ -3,31 +3,32 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Cadastrar Video</h1>
+    <h1>Atualizar Video</h1>
 @stop
 
 @section('content')
     <div>
-        <form method="POST" action="{{ route('moviesCreate', $id_course) }}">
+        <form method="POST" action="{{ route('moviesEdit', [ $movie->id_course, $movie->id ]) }}">
             @csrf
+            @method('put')
             <div class="mb-3">
-                <label for="ordination" class="form-label">Ordem</label>
-                <input name="ordination" type="text" class="form-control" id="ordination" placeholder="ordem do Curso">
+                <label for="name" class="form-label">Ordem</label>
+                <input name="ordination" type="text" class="form-control" id="ordination" placeholder="nome do Curso" value="{{ $movie->ordination }}">
             </div>
             <div class="mb-3">
                 <label for="name" class="form-label">Nome</label>
-                <input name="name" type="text" class="form-control" id="name" placeholder="nome do Curso">
+                <input name="name" type="text" class="form-control" id="name" placeholder="nome do Curso" value="{{ $movie->name }}">
             </div>
             <div class="mb-3">
-                <label for="summary" class="form-label">Resumo</label>
-                <input name="summary" type="text" class="form-control" id="summary" placeholder="resumo do Curso">
+                <label for="name" class="form-label">Resumo</label>
+                <input name="summary" type="text" class="form-control" id="summary" placeholder="nome do Curso" value="{{ $movie->summary }}">
             </div>
             <div class="mb-3">
                 <label for="desc" class="form-label">Descrição</label>
-                <textarea name="desc" id="desc" class="form-control" cols="30"  rows="10" placeholder="Descrição"></textarea>
+                <textarea name="desc" id="desc" class="form-control" cols="30"  rows="10" placeholder="Descrição">{{ $movie->description }}</textarea>
             </div>
             <p>upload de imagem / link</p>
-            <button type="submit" class="btn btn-primary">Cadastrar</button>
+            <button type="submit" class="btn btn-primary">Atualizar</button>
         </form>
     </div>
 @stop

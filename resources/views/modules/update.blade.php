@@ -21,17 +21,6 @@
                 <textarea name="desc" id="desc" class="form-control" cols="30"  rows="10" placeholder="Descrição" >{{ $course->description }}</textarea>
             </div>
             <p>upload de imagem / link</p>
-            <div>
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-            </div>
             <button type="submit" class="btn btn-primary">Atualizar</button>
         </form>
     </div>

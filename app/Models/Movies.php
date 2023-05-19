@@ -4,14 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Courses extends Model
+class Movies extends Model
 {
-    protected $table = 'courses';
+    protected $table = 'movie';
     protected $fillable = [
         'name',
         'description',
         'thumbnail',
+        'summary',
+        'ordination',
         'status',
+        'id_course',
         'created_at',
         'updated_at',
     ];
@@ -30,8 +33,8 @@ class Courses extends Model
      */
     protected $casts = [];
 
-    public function movies()
+    public function course()
     {
-        return $this->hasMany(Movies::class, 'id_course', 'id')->where('status', 1);
+        return $this->hasMany(Courses::class, 'id', 'id_course')->where('status', 1);
     }
 }

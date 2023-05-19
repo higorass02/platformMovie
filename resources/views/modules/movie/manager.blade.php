@@ -3,45 +3,32 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Cursos</h1>
-    <a href="{{ url('courseForm') }}"><button type="button" class="btn btn-primary">Novo Curso</button></a>
+    <h1>Curso: {{ $course['name'] }}</h1>
+    <h2>Videos</h2>
+    <a href="{{ route('moviesForm', $course->id) }}"><button type="button" class="btn btn-primary">Novo Video</button></a>
 @stop
 
 @section('content')
     <div>
         <table class="table table-striped">
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Dt Criação</th>
+                <th>Episódio</th>
+                <th>Nome</th>
+                <th>Resumo</th>
+                <th>Ultima Atualização</th>
                 <th>Opções</th>
             </tr>
-            @foreach ($courses as $course)
+            @foreach ($course->movies as $movie)
             <tr>
-                <td>{{ $course->id }}</td>
-                <td>{{ $course->name }}</td>
-                <td>{{ $course->created_at->format('d/m/Y') }}</td>
+                <td>{{ $movie->ordination }}</td>
+                <td>{{ $movie->name }}</td>
+                <td>{{ $movie->summary }}</td>
+                <td>{{ $movie->updated_at }}</td>
                 <td>
-                    <button
-                        class="btn btn-warning"
-                        onclick="xama(this)"
-                        data-type="{{ route('courseEdit', ':id') }}"
-                        data-id="{{ $course->id }}">Editar</button>
-                    <button
-                        class="btn btn-primary"
-                        onclick="xama(this)"
-                        data-type="{{ route('movies', ':id') }}"
-                        data-id="{{ $course->id }}">Abrir Lista Videos</button>
-                    <button
-                        class="btn btn-info"
-                        onclick="xama(this)"
-                        data-type="{{ route('subscribeByCourse', ':id') }}"
-                        data-id="{{ $course->id }}">Exibir Estudantes</button>
-                    <button
-                        class="btn btn-danger delete" 
-                        data-type="{{ route('courseDelete', ':id') }}"
-                        onclick="xama(this)"
-                        data-id="{{ $course->id }}" >Desabilitar</button>
+                    <button type="button" class="btn btn-warning" data-id="{{ $movie->id }}" data-id-course="{{ $movie->id_course }}" onclick="xama(this)" data-type="{{ route('moviesEditForm', [':idModules', ':id']) }}">Editar</button>
+                    <button type="button" class="btn btn-primary" data-id="{{ $movie->id }}" data-id-course="{{ $movie->id_course }}" onclick="xama(this)" data-type="{{ route('moviesOpenAdmin', [':idModules', ':id']) }}">Acessar como Admin</button>
+                    <button type="button" class="btn btn-primary" data-id="{{ $movie->id }}" data-id-course="{{ $movie->id_course }}" onclick="xama(this)" data-type="{{ route('moviesOpen', [':idModules', ':id']) }}">Acessar como Aluno</button>
+                    <button type="button" class="btn btn-danger delete"  data-id="{{ $movie->id }}" data-id-course="{{ $movie->id_course }}" onclick="xama(this)" data-type="{{ route('moviesDelete', [':idModules', ':id']) }}">Desabilitar</button>
                 </td>
             </tr>
             @endforeach
@@ -59,8 +46,10 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
         function xama(element) {
-            let id = element.getAttribute('data-id');
-            let url = element.getAttribute('data-type');
+            let id = $(element).data('id');
+            let idCourse = $(element).data('id-course');
+            let url = $(element).data('type');
+            url = url.replace(':idModules', idCourse);
             url = url.replace(':id', id);
             let MyClass = $(element).className;
 
